@@ -1,0 +1,35 @@
+{
+  "name": "hw1",
+  "version": "1.0.0",
+  "description": "dz-node-1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "start:dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/os-born/node-hw1.git"
+  },
+  "keywords": [],
+  "author": "Oleg Serdiuk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/os-born/node-hw1/issues"
+  },
+  "homepage": "https://github.com/os-born/node-hw1#readme",
+  "nodemonConfig": {
+    "ignore": [
+      "test/*",
+      "docs/*"
+    ],
+    "delay": 2500
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "uuid": "^8.3.2"
+  }
+}
