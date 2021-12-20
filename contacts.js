@@ -9,35 +9,40 @@ async function listContacts() {
   try {
     const data = await fs.readFile(contactsPath, "utf8");
     const parsedData = JSON.parse(data);
-    console.table(parsedData);
     return parsedData;
   } catch (error) {
-    console.log("Can't get contacts list!", error);
+    console.error("Can't get contacts list!", error.message);
   }
 }
 
 async function getContactById(contactId) {
-  const contacts = await listContacts();
-  const contact = contacts.find(({ id }) => id === contactId);
-  if (!contact) {
-    return console.log(`Can't find contact with ID: ${contactId}!`);
+  try {
+    const contacts = await listContacts();
+    const contact = contacts.find(
+      ({ id }) => id.toString() === contactId.toString()
+    );
+    return contact ? contact : `Can't find contact with ID: ${contactId}!`;
+  } catch (error) {
+    console.error("Something wrong!", error.message);
   }
-  return console.log(JSON.stringify(contact));
 }
 
 async function removeContact(contactId) {
   try {
     const contacts = await listContacts();
-    const isRemoved = contacts.find(({ id }) => id === contactId);
+    const isRemoved = contacts.find(
+      ({ id }) => id.toString() === contactId.toString()
+    );
     if (!isRemoved) {
       console.log(`Contact with ID: ${contactId} is not found!`);
       return;
     }
-    const editedContactList = contacts.filter(({ id }) => id !== contactId);
-    await fs.writeFile(contactsPath, JSON.stringify(editedContactList));
-    return console.log(
-      `Contact with ID: ${contactId} was successfully removed!`
+    const editedContactList = contacts.filter(
+      ({ id }) => id.toString() !== contactId.toString()
     );
+    await fs.writeFile(contactsPath, JSON.stringify(editedContactList));
+    console.log(`Contact with ID: ${contactId} was successfully removed!`);
+    return await listContacts();
   } catch (error) {
     console.log(`Contact with ID: ${contactId} is not found!`, error);
   }
